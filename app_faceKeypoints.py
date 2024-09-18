@@ -125,7 +125,7 @@ for index,(x,y,w,h) in enumerate(faces):
 #print(len(images_face))
 
 #Initialize the Model and Load Weights
-EPOCH = 0
+EPOCH = 200
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 net = Net().to(device)
 net.load_state_dict(torch.load(f'./saved_models/keypoints_model_{EPOCH}.pt', weights_only=True))

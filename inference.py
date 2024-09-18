@@ -86,7 +86,7 @@ if __name__ == '__main__':
     model = Net()
     model.to(device)
     # Load the model weights
-    EPOCH = 0
+    EPOCH = 200
     model.load_state_dict(torch.load(f'./saved_models/keypoints_model_{EPOCH}.pt', weights_only=True))
     # Define the data transforms
     data_transform = transforms.Compose([Rescale(250),
