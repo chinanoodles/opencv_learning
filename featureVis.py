@@ -20,7 +20,7 @@ if __name__ == '__main__':
     model.to(device)
     # Load the model weights
     EPOCH = 200
-    model.load_state_dict(torch.load(f'/mnt/bn/ndaigc/ml_project/facial_keypoints_detect/saved_models/keypoints_model_{EPOCH}.pt', weights_only=True))
+    model.load_state_dict(torch.load(f'./saved_models/keypoints_model_{EPOCH}.pt', weights_only=True))
     # Define the data transforms
     data_transform = transforms.Compose([Rescale(250),
                                         RandomCrop(224),
