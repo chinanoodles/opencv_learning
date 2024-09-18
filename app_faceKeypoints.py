@@ -98,11 +98,8 @@ image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 # plt.savefig('./appTst.png')
 
 # load in a haar cascade classifier for detecting frontal faces
-face_cascade = cv2.CascadeClassifier('/mnt/bn/ndaigc/ml_project/facial_keypoints_detect/detector_architecture/haarcascade_frontalface_default.xml')
+face_cascade = cv2.CascadeClassifier('./detector_architecture/haarcascade_frontalface_default.xml')
 
-# run the detector
-# the output here is an array of detections; the corners of each detection box
-# if necessary, modify these parameters until you successfully identify every face in a given image
 faces = face_cascade.detectMultiScale(image, 1.2, 2)
 
 # make a copy of the original image to plot detections on
@@ -131,7 +128,7 @@ for index,(x,y,w,h) in enumerate(faces):
 EPOCH = 0
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 net = Net().to(device)
-net.load_state_dict(torch.load(f'/mnt/bn/ndaigc/ml_project/facial_keypoints_detect/saved_models/keypoints_model_{EPOCH}.pt', weights_only=True))
+net.load_state_dict(torch.load(f'./saved_models/keypoints_model_{EPOCH}.pt', weights_only=True))
 net.eval()
 
 data_transform = transforms.Compose([Rescale(224),
