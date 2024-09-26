@@ -22,6 +22,8 @@ def net_sample_output(net,test_loader):
         #images = images.type(torch.cuda.FloatTensor)
         images = images.type(torch.FloatTensor).to(device)
         print(images.type())
+        print(f"Image tensor size: {images.data.size()}")
+
         # forward pass to get net output
         output_pts = net(images)        
         # reshape to batch_size x 68 x 2 pts
@@ -43,7 +45,7 @@ def visualize_output(test_images, test_outputs, gt_pts=None, batch_size=10,index
     plt.figure(figsize=(20,10))
     for i in range(batch_size):
         ax = plt.subplot(1, batch_size, i+1)
-        
+        print(i)
         # un-transform the image data
         image = test_images[i].data   # get the image from it's Variable wrapper
         image = image.cpu()
@@ -72,11 +74,11 @@ def visualize_output(test_images, test_outputs, gt_pts=None, batch_size=10,index
 def test_net(net,test_loader,index):
     images, output_pts, gt_pts =net_sample_output(net,test_loader)
     # print out the dimensions of the data to see if they make sense
-    print(images.data.size())
-    print(output_pts.data.size())
-    print(gt_pts.size())
+    #print(images.data.size())
+    #print(output_pts.data.size())
+    #print(gt_pts.size())
 
-    visualize_output(images, output_pts, gt_pts,batch_size=10,index=index)
+    visualize_output(images, output_pts, gt_pts,batch_size=1,index=index)
 
 if __name__ == '__main__':
     # Check if GPU is available and set the device accordingly
@@ -99,7 +101,7 @@ if __name__ == '__main__':
                                             root_dir='./data/test/',
                                             transform=data_transform)
     test_loader = DataLoader(transformed_testdataset,
-                        batch_size=10,
+                        batch_size=1,
                         shuffle=True,
                         num_workers=0)
 

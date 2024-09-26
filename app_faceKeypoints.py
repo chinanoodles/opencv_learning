@@ -120,10 +120,6 @@ for index,(x,y,w,h) in enumerate(faces):
     # Select the region of interest that is the face in the image 
     roi = image_copy[y:y+h, x:x+w]
     images_face.append(roi)
-
-
-#print(len(images_face))
-
 #Initialize the Model and Load Weights
 EPOCH = 200
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -148,8 +144,7 @@ test_loader = DataLoader(faces_data,
 # image = faces_data[0].cpu().numpy()   # convert to numpy array from a Tensor
 # plt.imshow(np.squeeze(image),cmap="gray")
 # plt.savefig(f'./faces_tst.png')
-for i,face in enumerate(test_loader):
-    sample = face
+for i,sample in enumerate(test_loader):
     image_tensor = sample.type(torch.FloatTensor).to(device)
     outputs = net(image_tensor)
     keypoints = outputs.view(outputs.size()[0], 68, -1)    
@@ -161,16 +156,7 @@ for i,face in enumerate(test_loader):
         predicted_key_pts = predicted_key_pts.cpu()
         predicted_key_pts = predicted_key_pts.numpy()
         # undo normalization of keypoints  
-        #predicted_key_pts = predicted_key_pts*50.0+100
-
-    #print(keypoints)
-    # images = sample.to(device)
-    # images = images.type(torch.FloatTensor).to(device)
-    #print(i, image_tensor.data.size())
-
- 
-    # keypoints = keypoints*50.0+100
-    # print(keypoints)
+        predicted_key_pts = predicted_key_pts*50.0+100
     image = image_tensor.cpu().numpy()   # convert to numpy array from a Tensor
     #image = np.transpose(image, (1, 2, 0)) 
     plt.imshow(np.squeeze(image),cmap="gray")
